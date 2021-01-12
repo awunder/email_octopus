@@ -54,10 +54,10 @@ list = EmailOctopus::List.create name: 'Newsletter'
 ```ruby
 list = EmailOctopus::List.find 'previous-list-id'
 contact = EmailOctopus::Contact.create(
-  first_name: 'Lester',
-  last_name: 'Tester',
   email_address: 'lester.tester@example.com',
-  subscribed: true,
+  fields: {
+    [tag name for contact field]: 'Lester'
+  },
   list_id: list.id
 )
 ```
@@ -101,7 +101,7 @@ contact.persisted? # if the user exists, the contact variable will update with r
 list = EmailOctopus::Contact.where(list_id: 'previous-list-id')
 contacts = list.contacts
 
-contact = list.contact.select {|x| x.id == 'previous_contact_id'}
+contact = contacts.select {|c| c.id == 'previous_contact_id'}
 contact.destroy
 ```
 
